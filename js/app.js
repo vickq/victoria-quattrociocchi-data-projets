@@ -26,9 +26,21 @@ function saveCompletedDays(days) {
 // CALENDAR
 // ==============================
 const cardColors = [
-    "#ffd6d6", "#ffe0b2", "#fff9c4", "#c8e6c9", "#b3e5fc",
-    "#d1c4e9", "#f8bbd0", "#ffccbc", "#e0f7fa", "#f0f4c3",
-    "#ffe082", "#b2dfdb", "#c5cae9", "#f48fb1", "#dcedc8"
+    "#e0f7fa", 
+    "#c1f0f8",
+    "#a2e8f6",
+    "#83e1f4",
+    "#64daf2",
+    "#45d2f0",
+    "#26cbe8",
+    "#0eb4d8",
+    "#0995c1",
+    "#087da9",
+    "#6a8fcf",
+    "#5b78ba",
+    "#4c61a5",
+    "#3d4a90",
+    "#2e336b"  
 ];
 
 function createCalendar() {
