@@ -5,100 +5,152 @@ const modalDayNumber = document.getElementById("modalDayNumber");
 const modalTitle = document.getElementById("modalTitle");
 const modalDifficulty = document.getElementById("modalDifficulty");
 const modalBody = document.getElementById("modalBody");
+const completeBtn = document.getElementById("completeBtn");
 const progressFill = document.getElementById("progressFill");
 const progressText = document.getElementById("progressText");
 
-let currentDayIndex = null;
-let completedDays = JSON.parse(localStorage.getItem("completedDays")) || [];
+let currentDay = null;
 
-// BUILD
-function renderCalendar() {
-  calendarGrid.innerHTML = "";
-
-  days.forEach((day, index) => {
-    const card = document.createElement("div");
-    card.classList.add("day-card");
-
-    if (completedDays.includes(day.day)) {
-      card.classList.add("completed");
-    }
-
-    card.innerHTML = `<span>${day.day}</span>`;
-
-    card.addEventListener("click", () => openModal(index));
-
-    calendarGrid.appendChild(card);
-  });
-
-  updateProgress();
+// ==============================
+// LOCAL STORAGE
+// ==============================
+function getCompletedDays() {
+    return JSON.parse(localStorage.getItem("completedDays")) || [];
 }
 
+function saveCompletedDays(days) {
+    localStorage.setItem("completedDays", JSON.stringify(days));
+}
+
+// ==============================
+// CALENDAR
+// ==============================
+function createCalendar() {
+    calendarGrid.innerHTML = "";
+
+    tasks.forEach(task => {
+        const card = document.createElement("div");
+        card.className = "day-card";
+        card.textContent = task.day;
+
+        const completedDays = getCompletedDays();
+        if (completedDays.includes(task.day)) {
+            card.classList.add("completed");
+        }
+
+        card.addEventListener("click", () => openModal(task));
+        calendarGrid.appendChild(card);
+    });
+
+    updateProgress();
+}
+
+// ==============================
 // MODAL
-function openModal(index) {
-  currentDayIndex = index;
-  const day = days[index];
+// ==============================
+function openModal(task) {
+    currentDay = task.day;
 
-  modalDayNumber.textContent = day.day;
-  modalTitle.textContent = day.title;
-  modalDifficulty.textContent = day.difficulty || "";
-  modalBody.innerHTML = "";
+    modalDayNumber.textContent = `Day ${task.day}`;
+    modalTitle.textContent = task.title;
+    modalDifficulty.textContent = task.difficulty;
+    modalDifficulty.className = `difficulty ${task.difficulty}`;
 
-  if (day.description) {
-    modalBody.innerHTML += `<p>${day.description}</p>`;
-  }
+    modalBody.innerHTML = "";
 
-  if (day.tips && day.tips.length) {
-    modalBody.innerHTML += `
-      <ul>
-        ${day.tips.map(tip => `<li>${tip}</li>`).join("")}
-      </ul>
-    `;
-  }
+    if (task.task) {
+        const p = document.createElement("p");
+        p.textContent = task.task;
+        modalBody.appendChild(p);
+    }
 
-  if (day.bonus) {
-    modalBody.innerHTML += `<div class="bonus">${day.bonus}</div>`;
-  }
+    if (task.tips.length > 0) {
+        const ul = document.createElement("ul");
+        task.tips.forEach(tip => {
+            const li = document.createElement("li");
+            li.textContent = tip;
+            ul.appendChild(li);
+        });
+        modalBody.appendChild(ul);
+    }
 
-  modal.classList.add("open");
+    if (task.bonus) {
+        const bonus = document.createElement("p");
+        bonus.textContent = task.bonus;
+        modalBody.appendChild(bonus);
+    }
+
+    updateCompleteButton();
+    modal.style.display = "flex";
 }
 
 function closeModal() {
-  modal.classList.remove("open");
+    modal.style.display = "none";
 }
 
-// PROGRESS
+// ==============================
+// COMPLETE / SKIP
+// ==============================
 function toggleComplete() {
-  const dayNumber = days[currentDayIndex].day;
+    let completedDays = getCompletedDays();
 
-  if (completedDays.includes(dayNumber)) {
-    completedDays = completedDays.filter(d => d !== dayNumber);
-  } else {
-    completedDays.push(dayNumber);
-  }
+    if (completedDays.includes(currentDay)) {
+        completedDays = completedDays.filter(day => day !== currentDay);
+    } else {
+        completedDays.push(currentDay);
+    }
 
-  localStorage.setItem("completedDays", JSON.stringify(completedDays));
-  renderCalendar();
-  closeModal();
+    saveCompletedDays(completedDays);
+    updateCompleteButton();
+    createCalendar();
 }
 
 function skipDay() {
-  if (currentDayIndex < days.length - 1) {
-    openModal(currentDayIndex + 1);
-  }
+    closeModal();
 }
 
-function resetProgress() {
-  completedDays = [];
-  localStorage.removeItem("completedDays");
-  renderCalendar();
+// ==============================
+// UI UPDATES
+// ==============================
+function updateCompleteButton() {
+    const completedDays = getCompletedDays();
+
+    if (completedDays.includes(currentDay)) {
+        completeBtn.textContent = "Completed ✓";
+        completeBtn.classList.add("completed");
+    } else {
+        completeBtn.textContent = "Mark as Complete";
+        completeBtn.classList.remove("completed");
+    }
 }
 
-// PROGRESS BAR
 function updateProgress() {
-  const percent = (completedDays.length / days.length) * 100;
-  progressFill.style.width = `${percent}%`;
-  progressText.textContent = `${completedDays.length} / ${days.length} completed`;
+    const completed = getCompletedDays().length;
+    const total = tasks.length;
+    const percent = Math.round((completed / total) * 100);
+
+    progressFill.style.width = `${percent}%`;
+    progressFill.textContent = `${percent}%`;
+    progressText.textContent = `Completed ${completed} of ${total}`;
 }
 
+// ==============================
+// RESET
+// ==============================
+function resetProgress() {
+    localStorage.removeItem("completedDays");
+    createCalendar();
+}
+
+// ==============================
 // INIT
-renderCalendar();
+// ==============================
+createCalendar();
+
+// CLOSE MODAL ON OUTSIDE CLICK
+window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+        closeModal();
+    }
+});
+
