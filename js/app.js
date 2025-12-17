@@ -126,6 +126,7 @@ function updateCompleteButton() {
 
 function updateProgress() {
     const completed = getCompletedDays().length;
+    const unlockedDay = completedDays + 1;
     const total = tasks.length;
     const percent = Math.round((completed / total) * 100);
 
