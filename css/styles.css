@@ -6,7 +6,7 @@
 }
 
 body {
-    background: linear-gradient(135deg, #fff5f5, #f8f9fa);
+    background: linear-gradient(135deg, #fef9f9, #f4f6f8);
     min-height: 100vh;
     padding: 30px;
 }
@@ -19,7 +19,7 @@ body {
 h1 {
     text-align: center;
     font-size: 2.5em;
-    color: #800020;
+    color: #9b0030; /* ligeramente distinto al original */
     margin-bottom: 10px;
 }
 
@@ -33,7 +33,7 @@ h1 {
 }
 
 .progress-bar {
-    background: #f0e6e6;
+    background: #f5e6e6;
     height: 28px;
     border-radius: 14px;
     overflow: hidden;
@@ -42,7 +42,7 @@ h1 {
 
 .progress-fill {
     height: 100%;
-    background: #086522;
+    background: #0b7a35; /* verde más brillante */
     color: white;
     font-weight: 600;
     display: flex;
@@ -84,8 +84,14 @@ h1 {
 }
 
 .day-card.completed {
-    background: #086522;
+    background: #0b7a35;
     color: white;
+}
+
+.card.locked {
+    opacity: 0.4;
+    pointer-events: none;
+    filter: grayscale(1);
 }
 
 /* MODAL */
@@ -118,7 +124,7 @@ h1 {
 }
 
 .modal-day-number {
-    background: #800020;
+    background: #9b0030;
     color: white;
     display: inline-block;
     padding: 8px 20px;
@@ -128,7 +134,7 @@ h1 {
 
 .modal-title {
     font-size: 2em;
-    color: #800020;
+    color: #9b0030;
     margin-bottom: 10px;
 }
 
@@ -140,17 +146,17 @@ h1 {
 }
 
 .difficulty.easy {
-    background: #086522;
+    background: #0b7a35;
     color: white;
 }
 
 .difficulty.medium {
-    background: #4a6b7c;
+    background: #3e5f6e;
     color: white;
 }
 
 .difficulty.hard {
-    background: #800020;
+    background: #9b0030;
     color: white;
 }
 
@@ -168,7 +174,7 @@ h1 {
 }
 
 .complete-btn.completed {
-    background: #086522;
+    background: #0b7a35;
 }
 
 .skip-btn {
@@ -181,8 +187,3 @@ h1 {
     cursor: pointer;
 }
 
-.card.locked {
-    opacity: 0.4;
-    pointer-events: none;
-    filter: grayscale(1);
-}
