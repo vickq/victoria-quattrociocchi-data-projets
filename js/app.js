@@ -107,14 +107,25 @@ function toggleComplete() {
     let completedDays = getCompletedDays();
 
     if (completedDays.includes(currentDay)) {
+        // Si ya estaba completado, lo desmarcamos
         completedDays = completedDays.filter(day => day !== currentDay);
     } else {
+        // Marcamos como completo
         completedDays.push(currentDay);
+
+        // Actualizamos unlockedDay si corresponde
+        let unlockedDay = parseInt(localStorage.getItem("unlockedDay")) || 1;
+        if (currentDay >= unlockedDay) {
+            unlockedDay = currentDay + 1;
+            localStorage.setItem("unlockedDay", unlockedDay);
+        }
     }
 
     saveCompletedDays(completedDays);
     updateCompleteButton();
-    createCalendar();
+
+    // Refresca la vista completa para recalcular cards bloqueadas
+    location.reload();
 }
 
 function skipDay() {
