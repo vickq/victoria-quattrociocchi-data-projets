@@ -34,6 +34,7 @@ h1 {
     border-radius: 16px;
     padding: 30px 40px;
     margin: 40px auto 60px;
+    margin: 40px auto 80px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.12);
     text-align: center;
 }
@@ -215,21 +216,13 @@ h1 {
 }
 
 /* ===========================
-   REMOVE WHITE BACKGROUND BEHIND CARDS
+   REMOVE WHITE PANEL BEHIND CARDS
 =========================== */
 
-.calendar-grid {
+.container {
     background: transparent !important;
-    padding: 0 !important;
-    margin-top: 40px;
-}
-
-.calendar-grid-wrapper,
-.calendar-container,
-.calendar-panel {
-    background: transparent !important;
-    padding: 0 !important;
     box-shadow: none !important;
     border-radius: 0 !important;
+    padding: 0;
 }
 
