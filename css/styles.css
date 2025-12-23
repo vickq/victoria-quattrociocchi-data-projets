@@ -11,8 +11,8 @@
 body {
     background: linear-gradient(
         180deg,
-        #EFE4DA,
-        #E3D3C3
+        #EFE4DA,  /* arena clara */
+        #E3D3C3   /* arena cálida */
     );
     min-height: 100vh;
     padding: 60px 40px;
@@ -34,12 +34,10 @@ h1 {
    PROGRESS BAR
 =========================== */
 .progress-container {
-    background: white;
-    border-radius: 16px;
-    padding: 30px 40px;
-    margin: 40px auto 60px;
+    background: transparent;
+    padding: 0;
     margin: 40px auto 80px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    box-shadow: none;
     text-align: center;
 }
 
@@ -97,7 +95,7 @@ h1 {
     padding: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.15);
     position: relative;
     overflow: hidden;
     min-height: 170px;
@@ -116,25 +114,6 @@ h1 {
 .day-card.completed {
     background: #086522 !important;
     color: white;
-}
-
-.day-card.has-image {
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.day-card > * {
-    position: relative;
-    z-index: 2;
-}
-
-.day-card.has-image::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.65); /* 👈 claridad */
-    z-index: 1;
 }
 
 .card.locked {
@@ -236,16 +215,5 @@ h1 {
     border: 1px solid #ddd;
     border-radius: 10px;
     cursor: pointer;
-}
-
-/* ===========================
-   REMOVE WHITE PANEL BEHIND CARDS
-=========================== */
-
-.container {
-    background: transparent !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    padding: 0;
 }
 
