@@ -33,9 +33,9 @@ const cardColors = [
 
 function createCalendar() {
     calendarGrid.innerHTML = "";
-    calendarGrid.style.background = "#fdf6f6"; // fondo del grid
-    calendarGrid.style.padding = "20px";
-    calendarGrid.style.borderRadius = "16px";
+    // calendarGrid.style.background = "#fdf6f6"; // fondo del grid
+    // calendarGrid.style.padding = "20px";
+    // calendarGrid.style.borderRadius = "16px";
 
     const completedDays = getCompletedDays();
     const unlockedDay = completedDays.length + 1;
